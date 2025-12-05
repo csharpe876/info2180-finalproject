@@ -1,59 +1,69 @@
 <?php
 require_once 'config.php';
 
+// Make sure user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit();
 }
 
+// Get the contact ID from the URL
 $contact_id = $_GET['id'] ?? 0;
 
-// Handle AJAX actions
+// Handle button actions from JavaScript
 if (isset($_POST['action'])) {
     header('Content-Type: application/json');
     
+    // Add a note to this contact
     if ($_POST['action'] === 'add_note') {
-        $comment = $_POST['comment'];
-        $stmt = $conn->prepare("INSERT INTO Notes (contact_id, comment, created_by) VALUES (?, ?, ?)");
-        $stmt->execute([$contact_id, $comment, $_SESSION['user_id']]);
+        $note_text = $_POST['comment'];
+        $query = $conn->prepare("INSERT INTO Notes (contact_id, comment, created_by) VALUES (?, ?, ?)");
+        $query->execute([$contact_id, $note_text, $_SESSION['user_id']]);
         echo json_encode(['success' => true]);
         exit();
     }
     
+    // Assign this contact to the current user
     if ($_POST['action'] === 'assign_to_me') {
-        $stmt = $conn->prepare("UPDATE Contacts SET assigned_to = ? WHERE id = ?");
-        $stmt->execute([$_SESSION['user_id'], $contact_id]);
+        $query = $conn->prepare("UPDATE Contacts SET assigned_to = ? WHERE id = ?");
+        $query->execute([$_SESSION['user_id'], $contact_id]);
         echo json_encode(['success' => true]);
         exit();
     }
     
+    // Switch between Sales Lead and Support
     if ($_POST['action'] === 'switch_type') {
-        $stmt = $conn->prepare("SELECT type FROM Contacts WHERE id = ?");
-        $stmt->execute([$contact_id]);
-        $current = $stmt->fetchColumn();
-        $new_type = ($current === 'Sales Lead') ? 'Support' : 'Sales Lead';
+        // Get the current type
+        $query = $conn->prepare("SELECT type FROM Contacts WHERE id = ?");
+        $query->execute([$contact_id]);
+        $current_type = $query->fetchColumn();
         
-        $stmt = $conn->prepare("UPDATE Contacts SET type = ? WHERE id = ?");
-        $stmt->execute([$new_type, $contact_id]);
+        // Switch to the opposite type
+        $new_type = ($current_type === 'Sales Lead') ? 'Support' : 'Sales Lead';
+        
+        // Update in database
+        $query = $conn->prepare("UPDATE Contacts SET type = ? WHERE id = ?");
+        $query->execute([$new_type, $contact_id]);
         echo json_encode(['success' => true, 'new_type' => $new_type]);
         exit();
     }
 }
 
-// Get contact details
-$stmt = $conn->prepare("SELECT c.*, CONCAT(u.firstname, ' ', u.lastname) as assigned_name, CONCAT(creator.firstname, ' ', creator.lastname) as created_by_name FROM Contacts c LEFT JOIN Users u ON c.assigned_to = u.id LEFT JOIN Users creator ON c.created_by = creator.id WHERE c.id = ?");
-$stmt->execute([$contact_id]);
-$contact = $stmt->fetch(PDO::FETCH_ASSOC);
+// Load this contact's information
+$query = $conn->prepare("SELECT c.*, CONCAT(u.firstname, ' ', u.lastname) as assigned_name, CONCAT(creator.firstname, ' ', creator.lastname) as created_by_name FROM Contacts c LEFT JOIN Users u ON c.assigned_to = u.id LEFT JOIN Users creator ON c.created_by = creator.id WHERE c.id = ?");
+$query->execute([$contact_id]);
+$contact = $query->fetch(PDO::FETCH_ASSOC);
 
+// If contact doesn't exist, go back to dashboard
 if (!$contact) {
     header('Location: dashboard.php');
     exit();
 }
 
-// Get notes
-$stmt = $conn->prepare("SELECT n.*, CONCAT(u.firstname, ' ', u.lastname) as created_by_name FROM Notes n JOIN Users u ON n.created_by = u.id WHERE n.contact_id = ? ORDER BY n.created_at DESC");
-$stmt->execute([$contact_id]);
-$notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Load all notes for this contact
+$query = $conn->prepare("SELECT n.*, CONCAT(u.firstname, ' ', u.lastname) as created_by_name FROM Notes n JOIN Users u ON n.created_by = u.id WHERE n.contact_id = ? ORDER BY n.created_at DESC");
+$query->execute([$contact_id]);
+$notes = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">

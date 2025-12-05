@@ -1,38 +1,45 @@
 <?php
 require_once 'config.php';
 
+// Make sure user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit();
 }
 
-// Handle AJAX requests for contacts
+// Handle requests from JavaScript to load contacts
 if (isset($_GET['action']) && $_GET['action'] === 'get_contacts') {
     header('Content-Type: application/json');
     
-    $filter = $_GET['filter'] ?? 'all';
-    $user_id = $_SESSION['user_id'];
+    // Get the filter type (all, Sales Lead, Support, or assigned to me)
+    $filter_type = $_GET['filter'] ?? 'all';
+    $current_user_id = $_SESSION['user_id'];
     
+    // Start building the database query
     $sql = "SELECT c.*, CONCAT(u.firstname, ' ', u.lastname) as assigned_name
             FROM Contacts c
             LEFT JOIN Users u ON c.assigned_to = u.id";
     
     $params = [];
     
-    if ($filter === 'Sales Lead' || $filter === 'Support') {
+    // Add filter conditions based on what the user selected
+    if ($filter_type === 'Sales Lead' || $filter_type === 'Support') {
         $sql .= " WHERE c.type = ?";
-        $params[] = $filter;
-    } elseif ($filter === 'assigned') {
+        $params[] = $filter_type;
+    } elseif ($filter_type === 'assigned') {
         $sql .= " WHERE c.assigned_to = ?";
-        $params[] = $user_id;
+        $params[] = $current_user_id;
     }
     
+    // Show newest contacts first
     $sql .= " ORDER BY c.created_at DESC";
     
-    $stmt = $conn->prepare($sql);
-    $stmt->execute($params);
-    $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Run the query and get results
+    $query = $conn->prepare($sql);
+    $query->execute($params);
+    $contacts = $query->fetchAll(PDO::FETCH_ASSOC);
     
+    // Send the contacts back as JSON
     echo json_encode($contacts);
     exit();
 }

@@ -1,33 +1,36 @@
 <?php
 require_once 'config.php';
 
+// Make sure user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit();
 }
 
-// Get users for assignment dropdown
+// Load list of users for the "Assign to" dropdown
 if (isset($_GET['action']) && $_GET['action'] === 'get_users') {
     header('Content-Type: application/json');
-    $stmt = $conn->query("SELECT id, firstname, lastname FROM Users ORDER BY firstname, lastname");
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($users);
+    $query = $conn->query("SELECT id, firstname, lastname FROM Users ORDER BY firstname, lastname");
+    $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($all_users);
     exit();
 }
 
-// Handle form submission
+// Save the new contact when form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'] ?? '';
-    $telephone = $_POST['telephone'] ?? '';
-    $company = $_POST['company'] ?? '';
-    $type = $_POST['type'];
-    $assigned_to = $_POST['assigned_to'];
+    // Get all the form data
+    $contact_title = $_POST['title'] ?? '';
+    $contact_firstname = $_POST['firstname'];
+    $contact_lastname = $_POST['lastname'];
+    $contact_email = $_POST['email'] ?? '';
+    $contact_phone = $_POST['telephone'] ?? '';
+    $contact_company = $_POST['company'] ?? '';
+    $contact_type = $_POST['type'];
+    $assigned_to_user = $_POST['assigned_to'];
     
-    $stmt = $conn->prepare("INSERT INTO Contacts (title, firstname, lastname, email, telephone, company, type, assigned_to, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$title, $firstname, $lastname, $email, $telephone, $company, $type, $assigned_to, $_SESSION['user_id']]);
+    // Save the contact to the database
+    $query = $conn->prepare("INSERT INTO Contacts (title, firstname, lastname, email, telephone, company, type, assigned_to, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $query->execute([$contact_title, $contact_firstname, $contact_lastname, $contact_email, $contact_phone, $contact_company, $contact_type, $assigned_to_user, $_SESSION['user_id']]);
     
     $success = "Contact added successfully!";
 }

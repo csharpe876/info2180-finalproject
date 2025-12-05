@@ -1,20 +1,26 @@
 <?php
 require_once 'config.php';
 
-// Handle login
+// Check if user is trying to login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password'];
+    // Get and clean the email from the form
+    $user_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $user_password = $_POST['password'];
     
-    $stmt = $conn->prepare("SELECT * FROM Users WHERE email = ?");
-    $stmt->execute([$email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Look up the user in the database
+    $query = $conn->prepare("SELECT * FROM Users WHERE email = ?");
+    $query->execute([$user_email]);
+    $user = $query->fetch(PDO::FETCH_ASSOC);
     
-    if ($user && password_verify($password, $user['password'])) {
+    // Check if user exists and password is correct
+    if ($user && password_verify($user_password, $user['password'])) {
+        // Save user info in session so they stay logged in
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = $user['role'];
         $_SESSION['firstname'] = $user['firstname'];
         $_SESSION['lastname'] = $user['lastname'];
+        
+        // Send them to the dashboard
         header('Location: dashboard.php');
         exit();
     } else {

@@ -1,30 +1,34 @@
 <?php
 require_once 'config.php';
 
+// Make sure user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit();
 }
 
+// Check if current user is an admin (only admins can add users)
 $is_admin = $_SESSION['role'] === 'Admin';
 
-// Handle new user form submission
+// Create new user when form is submitted (admin only)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_admin) {
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $role = $_POST['role'];
+    // Get form data
+    $new_firstname = $_POST['firstname'];
+    $new_lastname = $_POST['lastname'];
+    $new_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $new_role = $_POST['role'];
     
-    $stmt = $conn->prepare("INSERT INTO Users (firstname, lastname, password, email, role) VALUES (?, ?, ?, ?, ?)");
-    $stmt->execute([$firstname, $lastname, $password, $email, $role]);
+    // Add the new user to the database
+    $query = $conn->prepare("INSERT INTO Users (firstname, lastname, password, email, role) VALUES (?, ?, ?, ?, ?)");
+    $query->execute([$new_firstname, $new_lastname, $new_password, $new_email, $new_role]);
     
     $success = "User added successfully!";
 }
 
-// Get all users
-$stmt = $conn->query("SELECT id, firstname, lastname, email, role, created_at FROM Users ORDER BY created_at DESC");
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Load all users to display in the table
+$query = $conn->query("SELECT id, firstname, lastname, email, role, created_at FROM Users ORDER BY created_at DESC");
+$all_users = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">

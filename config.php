@@ -1,17 +1,19 @@
 <?php
-// Database configuration
-$host = 'localhost';
-$dbname = 'dolphin_crm';
-$username = 'root';
-$password = '';  // Default XAMPP password is empty
+// Database connection settings
+$host = 'localhost';          // Database server
+$dbname = 'dolphin_crm';      // Database name
+$username = 'root';            // Database username
+$password = '';                // Database password (empty for XAMPP by default)
 
+// Try to connect to the database
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+    // If connection fails, show error message
+    die("Could not connect to database: " . $e->getMessage());
 }
 
-// Start session
+// Start user session for login tracking
 session_start();
 ?>
