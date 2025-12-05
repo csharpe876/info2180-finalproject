@@ -4,7 +4,7 @@ This is the final group project for INFO2180
 
 Group Members:
     - Carl Sharpe
-    -
-    -
+    - Romario Grant
+    - Kira Hall
     -
     
