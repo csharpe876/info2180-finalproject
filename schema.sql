@@ -48,6 +48,6 @@ CREATE TABLE Notes (
 );
 
 -- Insert admin user
--- Password is 'password123' hashed
+-- Password is 'password123' hashed using PHP's password_hash()
 INSERT INTO Users (firstname, lastname, password, email, role) 
-VALUES ('Admin', 'User', '$2y$10$6X/9Qh9Z7eKKZ8N.vJQQfOQ7sL8sL8sL8sL8sL8sL8sL8sL8sL8sL', 'admin@project2.com', 'Admin');
+VALUES ('Admin', 'User', '$2y$10$LxtfNNt5YXF0ayFaXp2.KefD.kygQgfkrP3eoUzUtVlEk03pQdFEi', 'admin@project2.com', 'Admin');
