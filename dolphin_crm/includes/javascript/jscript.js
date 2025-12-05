@@ -1,9 +1,8 @@
 // Dolphin CRM - JavaScript Functions
 // This file contains all the interactive functionality for the CRM application
 
-// ============================
+
 // DASHBOARD FUNCTIONS
-// ============================
 
 // Load contacts from the server based on filter
 function loadContacts(filter = 'all') {
@@ -60,9 +59,7 @@ function initDashboardFilters() {
     });
 }
 
-// ============================
 // NEW CONTACT PAGE FUNCTIONS
-// ============================
 
 // Load users for the "Assigned To" dropdown
 function loadUsersForDropdown() {
@@ -87,9 +84,9 @@ function loadUsersForDropdown() {
     xhr.send();
 }
 
-// ============================
+
 // VIEW CONTACT PAGE FUNCTIONS
-// ============================
+
 
 // Add a note to a contact
 function setupNoteForm(contactId) {
@@ -147,9 +144,9 @@ function switchType(contactId) {
     xhr.send('action=switch_type');
 }
 
-// ============================
+
 // UTILITY FUNCTIONS
-// ============================
+
 
 // Format date to readable format
 function formatDate(dateString) {
@@ -175,9 +172,8 @@ function showMessage(message, type = 'success') {
     }, 3000);
 }
 
-// ============================
+
 // INITIALIZATION
-// ============================
 
 // Wait for page to load before running any code
 document.addEventListener('DOMContentLoaded', function() {
