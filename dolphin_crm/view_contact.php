@@ -16,7 +16,7 @@ if (isset($_POST['action'])) {
     
     // Add a note to this contact
     if ($_POST['action'] === 'add_note') {
-        $note_text = $_POST['comment'];
+        $note_text = $_POST['comment'] ?? '';
         $query = $conn->prepare("INSERT INTO Notes (contact_id, comment, created_by) VALUES (?, ?, ?)");
         $query->execute([$contact_id, $note_text, $_SESSION['user_id']]);
         echo json_encode(['success' => true]);
@@ -70,7 +70,7 @@ $notes = $query->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($contact['firstname'] . ' ' . $contact['lastname']); ?> - Dolphin CRM</title>
+    <title><?php echo htmlspecialchars(($contact['title'] ?? '') . ($contact['title'] ? ' ' : '') . $contact['firstname'] . ' ' . $contact['lastname']); ?> - Dolphin CRM</title>
     <link rel="stylesheet" href="includes/stylesheets/styling.css">
 </head>
 <body>
@@ -93,9 +93,9 @@ $notes = $query->fetchAll(PDO::FETCH_ASSOC);
                     <h2 id="contact-name"><?php echo htmlspecialchars(($contact['title'] ? $contact['title'] . ' ' : '') . $contact['firstname'] . ' ' . $contact['lastname']); ?></h2>
                     <p><?php echo htmlspecialchars($contact['email'] ?? ''); ?></p>
                 </div>
-                <div class="action-buttons">
-                    <button onclick="assignToMe()" class="btn btn-secondary">Assign to me</button>
-                    <button onclick="switchType()" class="btn btn-secondary" id="switch-btn">Switch to <span id="switch-type"><?php echo $contact['type'] === 'Sales Lead' ? 'Support' : 'Sales Lead'; ?></span></button>
+                <div class="action-buttons" data-contact-id="<?php echo $contact_id; ?>">
+                    <button onclick="assignToMe(<?php echo $contact_id; ?>)" class="btn btn-secondary">Assign to me</button>
+                    <button onclick="switchType(<?php echo $contact_id; ?>)" class="btn btn-secondary" id="switch-btn">Switch to <span id="switch-type"><?php echo $contact['type'] === 'Sales Lead' ? 'Support' : 'Sales Lead'; ?></span></button>
                 </div>
             </div>
 
@@ -166,53 +166,6 @@ $notes = $query->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </main>
 
-    <script>
-        const contactId = <?php echo $contact_id; ?>;
-
-        document.getElementById('note-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const comment = document.getElementById('comment').value;
-            
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'view_contact.php?id=' + contactId, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    location.reload();
-                }
-            };
-            
-            xhr.send('action=add_note&comment=' + encodeURIComponent(comment));
-        });
-
-        function assignToMe() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'view_contact.php?id=' + contactId, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    location.reload();
-                }
-            };
-            
-            xhr.send('action=assign_to_me');
-        }
-
-        function switchType() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'view_contact.php?id=' + contactId, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    location.reload();
-                }
-            };
-            
-            xhr.send('action=switch_type');
-        }
-    </script>
+    <script src="includes/javascript/jscript.js"></script>
 </body>
 </html>

@@ -13,11 +13,11 @@ $is_admin = $_SESSION['role'] === 'Admin';
 // Create new user when form is submitted (admin only)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_admin) {
     // Get form data
-    $new_firstname = $_POST['firstname'];
-    $new_lastname = $_POST['lastname'];
-    $new_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $new_role = $_POST['role'];
+    $new_firstname = $_POST['firstname'] ?? '';
+    $new_lastname = $_POST['lastname'] ?? '';
+    $new_email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
+    $new_password = password_hash($_POST['password'] ?? '', PASSWORD_DEFAULT);
+    $new_role = $_POST['role'] ?? 'Member';
     
     // Add the new user to the database
     $query = $conn->prepare("INSERT INTO Users (firstname, lastname, password, email, role) VALUES (?, ?, ?, ?, ?)");
@@ -112,7 +112,7 @@ $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user): ?>
+                <?php foreach ($all_users as $user): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
                     <td><?php echo htmlspecialchars($user['email']); ?></td>

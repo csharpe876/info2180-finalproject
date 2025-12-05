@@ -20,13 +20,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_users') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get all the form data
     $contact_title = $_POST['title'] ?? '';
-    $contact_firstname = $_POST['firstname'];
-    $contact_lastname = $_POST['lastname'];
+    $contact_firstname = $_POST['firstname'] ?? '';
+    $contact_lastname = $_POST['lastname'] ?? '';
     $contact_email = $_POST['email'] ?? '';
     $contact_phone = $_POST['telephone'] ?? '';
     $contact_company = $_POST['company'] ?? '';
-    $contact_type = $_POST['type'];
-    $assigned_to_user = $_POST['assigned_to'];
+    $contact_type = $_POST['type'] ?? '';
+    $assigned_to_user = $_POST['assigned_to'] ?? null;
     
     // Save the contact to the database
     $query = $conn->prepare("INSERT INTO Contacts (title, firstname, lastname, email, telephone, company, type, assigned_to, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -128,23 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <script>
-        // Load users for dropdown
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'new_contact.php?action=get_users', true);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const users = JSON.parse(xhr.responseText);
-                const select = document.getElementById('assigned_to');
-                users.forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.textContent = user.firstname + ' ' + user.lastname;
-                    select.appendChild(option);
-                });
-            }
-        };
-        xhr.send();
-    </script>
+    <script src="includes/javascript/jscript.js"></script>
 </body>
 </html>

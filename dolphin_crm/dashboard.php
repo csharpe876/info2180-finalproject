@@ -92,55 +92,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_contacts') {
         </table>
     </main>
 
-    <script>
-        function loadContacts(filter = 'all') {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'dashboard.php?action=get_contacts&filter=' + filter, true);
-            
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    const contacts = JSON.parse(xhr.responseText);
-                    displayContacts(contacts);
-                }
-            };
-            
-            xhr.send();
-        }
-
-        function displayContacts(contacts) {
-            const tbody = document.getElementById('contacts-body');
-            
-            if (contacts.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="no-data">No contacts found</td></tr>';
-                return;
-            }
-            
-            tbody.innerHTML = contacts.map(contact => `
-                <tr>
-                    <td class="contact-name">
-                        <a href="view_contact.php?id=${contact.id}">
-                            ${contact.title ? contact.title + ' ' : ''}${contact.firstname} ${contact.lastname}
-                        </a>
-                    </td>
-                    <td>${contact.email || ''}</td>
-                    <td>${contact.company || ''}</td>
-                    <td><span class="badge badge-${contact.type.toLowerCase().replace(' ', '-')}">${contact.type}</span></td>
-                    <td><a href="view_contact.php?id=${contact.id}" class="btn-view">View</a></td>
-                </tr>
-            `).join('');
-        }
-
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                loadContacts(this.dataset.filter);
-            });
-        });
-
-        // Load contacts on page load
-        loadContacts();
-    </script>
+    <script src="includes/javascript/jscript.js"></script>
 </body>
 </html>

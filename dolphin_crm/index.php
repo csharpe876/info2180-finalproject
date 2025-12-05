@@ -4,8 +4,8 @@ require_once 'config.php';
 // Check if user is trying to login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get and clean the email from the form
-    $user_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $user_password = $_POST['password'];
+    $user_email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
+    $user_password = $_POST['password'] ?? '';
     
     // Look up the user in the database
     $query = $conn->prepare("SELECT * FROM Users WHERE email = ?");
