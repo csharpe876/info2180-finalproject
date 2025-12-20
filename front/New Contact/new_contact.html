@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+    <link rel="stylesheet" href="new_contact_style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <p>Dolphin CRM</p>
+        <img src="../icons/dolphin.png" alt="Dolphin Logo" />
+    </header>
+    <div class="container">
+        <div class="main">
+            <h1>New Contact</h1>
+            <form id="newUserForm">
+
+                <div class="form-field" id="title">
+                    <label for="title">Title</label>
+                    <select id="title" name="type" required>
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Ms">Ms</option>
+                        <option value="Dr">Dr</option>
+                    </select>
+                </div>
+
+                <div class="form-field" id="firstName">
+                    <label for="fname">First Name</label>
+                    <input type="text" placeholder="Jane" id="fname" name="fname" required />
+                </div>
+
+                <div class="form-field" id="lastName">
+                    <label for="lname">Last Name</label>
+                    <input type="text" placeholder="Doe" id="lname" name="lname" required />
+                </div>
+
+                <div class="form-field" id="email">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="something@example.com" id="email" name="email" required />
+                </div>
+
+                <div class="form-field" id="telephone">
+                    <label for="telephone">Telephone</label>
+                    <input type="number" id="telephone" name="telephone" required />
+                </div>
+
+                <div class="form-field" id="company">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" required />
+                </div>
+
+                <div class="form-field" id="type">
+                    <label for="type">Type</label>
+                    <select id="type" name="type" required>
+                        <option value="Sales Lead">Sales Lead</option>
+                        <option value="Support">Support</option>
+                    </select>
+                </div>
+
+                <div class="form-field" id="assigned">
+                    <label for="assigned">Assigned To</label>
+                    <select id="assigned" name="assigned" required>
+                        <option value="Jane Doe">Jane Doe</option>
+                        <option value="John Smith">John Smith</option>
+                    </select>
+                </div>
+                
+                <div class="form-field" id="button">
+                    <button type="submit">Save</button>
+                </div>
+                        
+            </form>
+        </div>
+        <div class="aside">
+            <nav>
+                <ul>
+                    <li><a href="../Dashboard/dashboard.html"><img src="../icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
+                    <li><a href="../New Contact/new_contact.html"><img src="../icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
+                    <li><a href="../Users/users.html"><img src="../icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
+                </ul>
+            </nav>        
+            <div class="logout">
+                <a href="../User Login/login.html"><img src="../icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
+            </div>
+        </div>
+    </div>  
+</body>

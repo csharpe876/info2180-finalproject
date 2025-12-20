@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <p>Dolphin CRM</p>
+        <img src="../icons/dolphin.png" alt="Dolphin Logo" />
+    </header>
+    <div class="container">
+        <div class="main">
+            <h1>New User</h1>
+            <form id="newUserForm">
+                <div class="form-field" id="firstName">
+                    <label for="fname">First Name</label>
+                    <input type="text" placeholder="Jane" id="fname" name="fname" required />
+                </div>
+
+                <div class="form-field" id="lastName">
+                    <label for="lname">Last Name</label>
+                    <input type="text" placeholder="Doe" id="lname" name="lname" required />
+                </div>
+
+                <div class="form-field" id="email">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="something@example.com" id="email" name="email" required />
+                </div>
+
+                <div class="form-field" id="password">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+
+                <div class="form-field" id="role">
+                    <label for="role">Role</label>
+                    <select id="role" name="type" required>
+                        <option value="Member">Member</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                
+                <div class="form-field" id="button">
+                    <button type="submit">Save</button>
+                </div>
+                        
+            </form>
+        </div>
+        <div class="aside">
+            <nav>
+                <ul>
+                    <li><a href="../Dashboard/dashboard.html"><img src="../icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
+                    <li><a href="../New Contact/new_contact.html"><img src="../icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
+                    <li><a href="../Users/users.html"><img src="../icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
+                </ul>
+            </nav>        
+            <div class="logout">
+                <a href="../logout.php"><img src="../icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
+            </div>
+        </div>
+    </div>  
+</body>

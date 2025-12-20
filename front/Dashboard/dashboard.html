@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <p>Dolphin CRM</p>
+        <img src="../icons/dolphin.png" alt="Dolphin Logo" />
+    </header>
+    <div class="container">        
+        <div class="main">
+            <h1>
+                Dashboard
+                <a href="../New Contact/new_contact.html" id="addContactBtn">+ Add Contact</a>
+            </h1>
+            <div class="table-container">
+                <p>                    
+                    <img src="../icons/filter.png" alt="Filter Icon" class="filter-icon"> 
+                    Filter by:
+                    <button id="allBtn">All</button>
+                    <button id="adminBtn">Sales Lead</button>
+                    <button id="allBtn">Support</button>
+                    <button id="adminBtn">Assigned to me</button>   
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Company</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr>
+                            <td>Jane Doe</td>
+                            <td>something@email.com</td>
+                            <td>Admin</td>  
+                            <td>01/01/2024</td>
+                            <td>View</td>
+                        </tr>   
+                    </tbody>  
+                </table>
+            </div>
+        </div>
+        <div class="aside">
+            <nav>
+                <ul>
+                    <li><a href="../Dashboard/dashboard.html"><img src="../icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
+                    <li><a href="../New Contact/new_contact.html"><img src="../icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
+                    <li><a href="../Users/users.html"><img src="../icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
+                </ul>
+            </nav>        
+            <div class="logout">
+                <a href="../User Login/login.html"><img src="../icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
+            </div>  
