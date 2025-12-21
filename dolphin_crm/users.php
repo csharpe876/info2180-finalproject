@@ -35,93 +35,50 @@ $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users - Dolphin CRM</title>
-    <link rel="stylesheet" href="includes/stylesheets/styling.css">
+    <title>New User</title>
+    <link rel="stylesheet" href="includes/stylesheets/users_style.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>🐬 Dolphin CRM</h1>
-            <nav>
-                <a href="dashboard.php">Home</a>
-                <a href="new_contact.php">New Contact</a>
-                <a href="users.php" class="active">Users</a>
-                <a href="logout.php">Logout</a>
-            </nav>
-        </div>
+        <p>Dolphin CRM</p>
+        <img src="includes/icons/dolphin.png" alt="Dolphin Logo" />
     </header>
-
-    <main class="container">
-        <div class="users-header">
-            <h2>Users</h2>
-            <?php if ($is_admin): ?>
-                <button onclick="document.getElementById('add-user-form').style.display='block'" class="btn btn-primary">+ Add User</button>
-            <?php endif; ?>
+    <div class="container">        
+        <div class="main">
+            <h1>
+                Users
+                <a href="front/New User/new_user.html" id="newUserBtn">+ Add User</a>
+            </h1>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr>
+                            <td>Jane Doe</td>
+                            <td>something@email.com</td>
+                            <td>Admin</td>  
+                            <td>01/01/2024</td>
+                        </tr>   
+                    </tbody>  
+                </table>
+            </div>
         </div>
-
-        <?php if (isset($success)): ?>
-            <div class="success-message"><?php echo $success; ?></div>
-        <?php endif; ?>
-
-        <?php if ($is_admin): ?>
-        <div id="add-user-form" style="display:none;" class="form-container">
-            <h3>Add User</h3>
-            <form method="POST">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" name="firstname" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" name="lastname" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="password" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Role</label>
-                        <select name="role" required>
-                            <option value="Member">Member</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" onclick="document.getElementById('add-user-form').style.display='none'" class="btn btn-secondary">Cancel</button>
-            </form>
-        </div>
-        <?php endif; ?>
-
-        <table class="users-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($all_users as $user): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
-                    <td><?php echo htmlspecialchars($user['email']); ?></td>
-                    <td><span class="badge badge-role"><?php echo htmlspecialchars($user['role']); ?></span></td>
-                    <td><?php echo date('F j, Y', strtotime($user['created_at'])); ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </main>
-</body>
-</html>
+        <div class="aside">
+            <nav>
+                <ul>
+                    <li><a href="dashboard.php"><img src="includes/icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
+                    <li><a href="new_contact.php"><img src="includes/icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
+                    <li><a href="users.php"><img src="includes/icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
+                </ul>
+            </nav>        
+            <div class="logout">
+                <a href="logout.php"><img src="includes/icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
+            </div>  
