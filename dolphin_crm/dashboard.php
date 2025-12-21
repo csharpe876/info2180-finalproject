@@ -56,17 +56,17 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_contacts') {
 <body>
     <header>
         <p>Dolphin CRM</p>
-        <img src="../icons/dolphin.png" alt="Dolphin Logo" />
+        <img src="includes/icons/dolphin.png" alt="Dolphin Logo" />
     </header>
     <div class="container">        
         <div class="main">
             <h1>
                 Dashboard
-                <a href="../New Contact/new_contact.html" id="addContactBtn">+ Add Contact</a>
+                <a href="new_contact.php" id="addContactBtn">+ Add Contact</a>
             </h1>
             <div class="table-container">
                 <p>                    
-                    <img src="../icons/filter.png" alt="Filter Icon" class="filter-icon"> 
+                    <img src="includes/icons/filter.png" alt="Filter Icon" class="filter-icon"> 
                     Filter by:
                     <button id="allBtn">All</button>
                     <button id="adminBtn">Sales Lead</button>
@@ -98,11 +98,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_contacts') {
         <div class="aside">
             <nav>
                 <ul>
-                    <li><a href="../Dashboard/dashboard.html"><img src="../icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
-                    <li><a href="../New Contact/new_contact.html"><img src="../icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
-                    <li><a href="../Users/users.html"><img src="../icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
+                    <li><a href="dashboard.php"><img src="includes/icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
+                    <li><a href="new_contact.php"><img src="includes/icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
+                    <li><a href="users.php"><img src="includes/icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
                 </ul>
             </nav>        
             <div class="logout">
-                <a href="../User Login/login.html"><img src="../icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
+                <a href="logout.php"><img src="includes/icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
             </div>  
