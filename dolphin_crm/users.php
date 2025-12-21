@@ -86,12 +86,10 @@ $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="form-field" id="password">
                     <label for="password">Password</label>
-                    <div style="position: relative;">
+                    
+                    <div class="password-wrapper">
                         <input type="password" id="newUserPassword" name="password" required>
-                        <span id="toggleNewUserPassword"
-                              style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:14px; color:#6b7280;">
-                            👁
-                        </span>
+                        <i id="toggleNewUserPassword" class="eye">👁</i>
                     </div>
                 </div>
 

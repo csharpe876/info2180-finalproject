@@ -168,3 +168,28 @@ nav a:hover{
     object-fit: cover;
     border-radius: 3px;
 }
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px; 
+    box-sizing: border-box;
+}
+
+.password-wrapper .eye {
+    position: absolute;
+    right: 12px;       
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;  
+    cursor: pointer;
+    color: #888;       
+}
+
+.password-wrapper .eye:hover {
+    color: #555;
+}
