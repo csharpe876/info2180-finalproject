@@ -49,49 +49,60 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_contacts') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Dolphin CRM</title>
-    <link rel="stylesheet" href="includes/stylesheets/styling.css">
+    <title>New User</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>🐬 Dolphin CRM</h1>
-            <nav>
-                <a href="dashboard.php" class="active">Home</a>
-                <a href="new_contact.php">New Contact</a>
-                <a href="users.php">Users</a>
-                <a href="logout.php">Logout</a>
-            </nav>
-        </div>
+        <p>Dolphin CRM</p>
+        <img src="../icons/dolphin.png" alt="Dolphin Logo" />
     </header>
-
-    <main class="container">
-        <div class="dashboard-header">
-            <h2>Dashboard</h2>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="Sales Lead">Sales Leads</button>
-                <button class="filter-btn" data-filter="Support">Support</button>
-                <button class="filter-btn" data-filter="assigned">Assigned to me</button>
+    <div class="container">        
+        <div class="main">
+            <h1>
+                Dashboard
+                <a href="../New Contact/new_contact.html" id="addContactBtn">+ Add Contact</a>
+            </h1>
+            <div class="table-container">
+                <p>                    
+                    <img src="../icons/filter.png" alt="Filter Icon" class="filter-icon"> 
+                    Filter by:
+                    <button id="allBtn">All</button>
+                    <button id="adminBtn">Sales Lead</button>
+                    <button id="allBtn">Support</button>
+                    <button id="adminBtn">Assigned to me</button>   
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Company</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr>
+                            <td>Jane Doe</td>
+                            <td>something@email.com</td>
+                            <td>Admin</td>  
+                            <td>01/01/2024</td>
+                            <td>View</td>
+                        </tr>   
+                    </tbody>  
+                </table>
             </div>
         </div>
-
-        <table id="contacts-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Company</th>
-                    <th>Type</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="contacts-body">
-                <tr><td colspan="5">Loading...</td></tr>
-            </tbody>
-        </table>
-    </main>
-
-    <script src="includes/javascript/jscript.js"></script>
-</body>
-</html>
+        <div class="aside">
+            <nav>
+                <ul>
+                    <li><a href="../Dashboard/dashboard.html"><img src="../icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
+                    <li><a href="../New Contact/new_contact.html"><img src="../icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
+                    <li><a href="../Users/users.html"><img src="../icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
+                </ul>
+            </nav>        
+            <div class="logout">
+                <a href="../User Login/login.html"><img src="../icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
+            </div>  
