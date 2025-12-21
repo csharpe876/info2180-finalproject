@@ -10,6 +10,8 @@ if (!isset($_SESSION['user_id'])) {
 // Check if current user is an admin (only admins can add users)
 $is_admin = $_SESSION['role'] === 'Admin';
 
+$showForm = isset($_GET['addUser']);
+
 // Create new user when form is submitted (admin only)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_admin) {
     // Get form data
@@ -34,51 +36,170 @@ $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New User</title>
+    <title>Dolphin CRM - Users</title>
+
     <link rel="stylesheet" href="includes/stylesheets/users_style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="includes/stylesheets/new_user_style.css">
 </head>
 <body>
-    <header>
-        <p>Dolphin CRM</p>
-        <img src="includes/icons/dolphin.png" alt="Dolphin Logo" />
-    </header>
-    <div class="container">        
-        <div class="main">
-            <h1>
-                Users
-                <a href="front/New User/new_user.html" id="newUserBtn">+ Add User</a>
-            </h1>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Created</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userTableBody">
-                        <tr>
-                            <td>Jane Doe</td>
-                            <td>something@email.com</td>
-                            <td>Admin</td>  
-                            <td>01/01/2024</td>
-                        </tr>   
-                    </tbody>  
-                </table>
-            </div>
+
+<header>
+    <p>Dolphin CRM</p>
+    <img src="includes/icons/dolphin.png" alt="Dolphin Logo">
+</header>
+
+<div class="container">
+
+    <div class="main">
+        <h1>
+            Users
+            <?php if ($is_admin): ?>
+                <button id="showAddUserForm" id="newUserBtn">+ Add User</button>
+            <?php endif; ?>
+        </h1>
+
+        <?php if (isset($success)): ?>
+            <p class="success-message">
+                <?= htmlspecialchars($success) ?>
+            </p>
+        <?php endif; ?>
+
+        <?php if ($is_admin): ?>
+        <!-- Hidden Add User form (styled by new_user_style.css) -->
+        <div id="add-user-form" class="form-container" style="display:none;">
+            <h2>New User</h2>
+            <form method="POST">
+                <div class="form-field" id="firstName">
+                    <label for="firstname">First Name</label>
+                    <input type="text" id="firstname" name="firstname" required>
+                </div>
+
+                <div class="form-field" id="lastName">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+
+                <div class="form-field" id="email">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-field" id="password">
+                    <label for="password">Password</label>
+                    <div style="position: relative;">
+                        <input type="password" id="newUserPassword" name="password" required>
+                        <span id="toggleNewUserPassword"
+                              style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:14px; color:#6b7280;">
+                            👁
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-field" id="role">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" required>
+                        <option value="Member">Member</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+
+                <div class="form-field" id="button">
+                    <button type="submit">Save</button>
+                    <button type="button" id="cancelAddUser">Cancel</button>
+                </div>
+            </form>
         </div>
-        <div class="aside">
-            <nav>
-                <ul>
-                    <li><a href="dashboard.php"><img src="includes/icons/home.jpg" alt="Home" class="nav-icon">Home</a></li>
-                    <li><a href="new_contact.php"><img src="includes/icons/user.jpg" alt="New Contact" class="nav-icon">New Contact</a></li>
-                    <li><a href="users.php"><img src="includes/icons/users.jpg" alt="Users" class="nav-icon">Users</a></li>
-                </ul>
-            </nav>        
-            <div class="logout">
-                <a href="logout.php"><img src="includes/icons/logout.jpg" alt="Logout" class="nav-icon">Logout</a>
-            </div>  
+        <?php endif; ?>
+
+        <!-- USERS TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($all_users as $user): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($user['firstname'] . ' ' . $user['lastname']) ?></td>
+                            <td><?= htmlspecialchars($user['email']) ?></td>
+                            <td><?= htmlspecialchars($user['role']) ?></td>
+                            <td>
+                                <?= date('Y/m/d H:i', strtotime($user['created_at'])) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="aside">
+        <nav>
+            <ul>
+                <li>
+                    <a href="dashboard.php">
+                        <img src="includes/icons/home.jpg" alt="Home" class="nav-icon">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="new_contact.php">
+                        <img src="includes/icons/user.jpg" alt="New Contact" class="nav-icon">
+                        New Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="users.php">
+                        <img src="includes/icons/users.jpg" alt="Users" class="nav-icon">
+                        Users
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="logout">
+            <a href="logout.php">
+                <img src="includes/icons/logout.jpg" alt="Logout" class="nav-icon">
+                Logout
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const addForm     = document.getElementById('add-user-form');
+    const showBtn     = document.getElementById('showAddUserForm');
+    const cancelBtn   = document.getElementById('cancelAddUser');
+    const pwdField    = document.getElementById('newUserPassword');
+    const togglePwd   = document.getElementById('toggleNewUserPassword');
+
+    if (showBtn && addForm) {
+        showBtn.addEventListener('click', () => {
+            addForm.style.display = 'block';
+        });
+    }
+
+    if (cancelBtn && addForm) {
+        cancelBtn.addEventListener('click', () => {
+            addForm.style.display = 'none';
+        });
+    }
+
+    if (pwdField && togglePwd) {
+        togglePwd.addEventListener('click', () => {
+            const type = pwdField.getAttribute('type') === 'password' ? 'text' : 'password';
+            pwdField.setAttribute('type', type);
+        });
+    }
+});
+</script>
+
+</body>
+</html>
