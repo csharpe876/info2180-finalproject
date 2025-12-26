@@ -168,4 +168,5 @@ $notes = $query->fetchAll(PDO::FETCH_ASSOC);
 
     <script src="includes/javascript/jscript.js"></script>
 </body>
+
 </html>
