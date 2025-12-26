@@ -49,9 +49,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_contacts') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New User</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="includes/stylesheets/dashboard_style.css">
-    <script src="script.js"></script>
+    <script src="includes/javascript/jscript.js"></script>
 </head>
 <body>
     <header>
@@ -83,14 +83,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_contacts') {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id="userTableBody">
-                        <tr>
-                            <td>Jane Doe</td>
-                            <td>something@email.com</td>
-                            <td>Admin</td>  
-                            <td>01/01/2024</td>
-                            <td>View</td>
-                        </tr>   
+                    <tbody id="contacts-body">
+                        <!-- Contacts will be loaded here by JavaScript -->
                     </tbody>  
                 </table>
             </div>
