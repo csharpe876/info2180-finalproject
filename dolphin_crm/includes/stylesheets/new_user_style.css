@@ -1,3 +1,14 @@
+/* Add spacing between Save and Cancel buttons */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.form-actions button {
+    margin: 0;
+}
 body{
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -109,6 +120,17 @@ button{
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: #3730a3;
+    color: #fff;
+}
+
+/* For secondary/gray buttons, if any */
+button.btn-secondary:hover {
+    background-color: #6b7280;
+    color: #fff;
 }
 
 .aside{

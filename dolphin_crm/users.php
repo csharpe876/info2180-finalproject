@@ -44,8 +44,10 @@ $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header>
-    <p>Dolphin CRM</p>
-    <img src="includes/icons/dolphin.png" alt="Dolphin Logo">
+    <a href="dashboard.php" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:10px;">
+        <img src="includes/icons/dolphin.png" alt="Dolphin Logo" />
+        <span style="font-weight:bold; font-size:16px;">Dolphin CRM</span>
+    </a>
 </header>
 
 <div class="container">
@@ -101,7 +103,7 @@ $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
                     </select>
                 </div>
 
-                <div class="form-field" id="button">
+                <div class="form-actions">
                     <button type="submit">Save</button>
                     <button type="button" id="cancelAddUser">Cancel</button>
                 </div>
@@ -137,36 +139,7 @@ $all_users = $query->fetchAll(PDO::FETCH_ASSOC);
 
     </div>
 
-    <div class="aside">
-        <nav>
-            <ul>
-                <li>
-                    <a href="dashboard.php">
-                        <img src="includes/icons/home.jpg" alt="Home" class="nav-icon">
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="new_contact.php">
-                        <img src="includes/icons/user.jpg" alt="New Contact" class="nav-icon">
-                        New Contact
-                    </a>
-                </li>
-                <li>
-                    <a href="users.php">
-                        <img src="includes/icons/users.jpg" alt="Users" class="nav-icon">
-                        Users
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="logout">
-            <a href="logout.php">
-                <img src="includes/icons/logout.jpg" alt="Logout" class="nav-icon">
-                Logout
-            </a>
-        </div>
-    </div>
+    <?php include 'includes/sidebar.php'; ?>
 
 </div>
 

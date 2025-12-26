@@ -34,28 +34,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Dolphin CRM</title>
-    <link rel="stylesheet" href="includes/stylesheets/styling.css">
+    <link rel="stylesheet" href="includes/stylesheets/login_style.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-box">
-            <h1>🐬 Dolphin CRM</h1>
-            <h2>Login</h2>
-            <?php if (isset($error)): ?>
-                <div class="error-message"><?php echo $error; ?></div>
-            <?php endif; ?>
-            <form method="POST">
-                <div class="form-group">
-                    <label>Email address</label>
-                    <input type="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
+    <header>
+        <div class="header-content">
+            <img src="includes/icons/dolphin.png" alt="Dolphin Logo" style="height:35px;" />
+            <span style="font-weight:bold; font-size:20px;">Dolphin CRM</span>
         </div>
-    </div>
+    </header>
+    
+    <main>
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Login</h2>
+                
+                <?php if (isset($error)): ?>
+                    <div class="error-message">
+                        <strong>⚠️ <?php echo htmlspecialchars($error); ?></strong>
+                    </div>
+                <?php endif; ?>
+                
+                <form method="POST" action="index.php">
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="Email Address" 
+                            required 
+                            autofocus
+                        />
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="password-wrapper">
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password"
+                                placeholder="Password" 
+                                required
+                            />
+                            <span class="toggle-password" id="togglePassword">
+                                <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn-login">
+                            <span class="lock-icon">🔒</span>
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>Copyright &copy; <?php echo date('Y'); ?> Dolphin CRM</p>
+    </footer>
+    
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = this.querySelector('.eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.style.opacity = '0.5';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.style.opacity = '1';
+            }
+        });
+    </script>
 </body>
 </html>
